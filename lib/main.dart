@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:to_schedule/Customs/TopBar/topbar.dart';
 import 'package:to_schedule/Utilties/screen_size.dart';
 
-import 'Customs/Calendar/calender_views.dart';
+import 'Customs/Calendar/weekly_view.dart';
+import 'Customs/Timer/timer.dart';
 
 void main() {
   runApp(MyApp());
@@ -93,7 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 // horizontal).
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-
+                  TopBar(),
                   Weekly(_scrollController)
                 ],
               ),
