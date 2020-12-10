@@ -22,7 +22,18 @@ class _TopBarState extends State<TopBar> {
             icon: Icon(Icons.add),
             iconSize: 30,
             color: Colors.white,
-            onPressed: () => {},
+            onPressed: () async => showDialog(
+                barrierDismissible: false,
+                context: context,
+                builder: (context) => SimpleDialog(
+                      title: Center(child: Text("To-do")),
+                      children: [
+                        SimpleDialogOption(
+                            child: Row(children: [
+                              Checkbox(value: false,),
+                              Text("fuck you")]))
+                      ],
+                    )),
           ),
 
           // width: 140,

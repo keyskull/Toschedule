@@ -82,19 +82,19 @@ Widget _weeklyView(startWithSunday, _height, _time) {
         child: Card(
             color: _color,
             child: Stack(children: [
-              _numberOfDate(_fixIndex, _time),
+              _numberOfDate(_fixIndex, _time,_height),
               _taskList(_height, _fixIndex),
               _timeLine(_height)
             ])));
   }));
 }
 
-Widget _numberOfDate(_index, DateTime _time) => Opacity(
+Widget _numberOfDate(_index, DateTime _time,_hieght) => Opacity(
     opacity: 0.6,
     child: Align(
         alignment: Alignment.center,
         child: Text("${(_time.day + (_index - _time.weekday))}",
-            style: TextStyle(height: 1, fontSize: 300))));
+            style: TextStyle(height: 1, fontSize: _hieght > 300 ? 300: 250))));
 
 Widget _timeLine(_height) => Column(
     children: List.generate(
