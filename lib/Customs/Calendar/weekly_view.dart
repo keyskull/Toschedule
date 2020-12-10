@@ -13,30 +13,25 @@ class Weekly extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _height = ScreenSize.isDesktop(context)
-        ? ScreenSize.getFlashScreenSize(context).height * 0.3
-        : ScreenSize.getFlashScreenSize(context).height * 0.5;
-    final  _width = ScreenSize.getScreenSize(context).width * 0.97;
+    final double _height = ScreenSize.isDesktop(context) ? 500 : 300;
+    final _width = ScreenSize.getFlashScreenSize(context).width * 0.97;
 
     return Container(
         width: _width,
-        child:
-          Card(
-              color: Colors.grey,
-              child: Stack(children: [
-                Container(
-                    height: _height,
-                    width: _width,
-                    child: Scrollbar(
-                        controller: controller,
-                        child: ListView(
-                            scrollDirection: Axis.horizontal,
-                            controller: controller,
-                            children:
-                                _weeklyView(startWithSunday, _height, _time)))),
-                _timeSerialized(_height),
-              ]))
-        );
+        height: _height,
+        child: Card(
+            color: Colors.grey,
+            child: Stack(children: [
+              Scrollbar(
+                  controller: controller,
+                  child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      controller: controller,
+                      children: [
+                        _weeklyView(startWithSunday, _height, _time)
+                      ])),
+              _timeSerialized(_height),
+            ])));
   }
 }
 
@@ -64,10 +59,9 @@ const _timeArray = [
   "22:00"
 ];
 
-
-
-List<Widget> _weeklyView(startWithSunday, _height, _time) {
-  return List<Widget>.generate(7, (index) {
+Widget _weeklyView(startWithSunday, _height, _time) {
+  return Row(
+      children: List<Widget>.generate(7, (index) {
     final _fixIndex = startWithSunday ? index : index + 1;
     var _color = Colors.white38;
     switch (_fixIndex) {
@@ -81,36 +75,36 @@ List<Widget> _weeklyView(startWithSunday, _height, _time) {
     if ((_time.weekday == 7 && _fixIndex == 0) || _time.weekday == _fixIndex)
       _color = Colors.blueGrey;
 
-    return  Container(
-            width: _height,
-            height: _height,
-            constraints: BoxConstraints(minWidth: 300, minHeight: 300),
-            child: Card(
-                color: _color,
-                child: Stack(children: [
-                  _numberOfDate(_fixIndex, _time),
-                  _taskList(_height, _fixIndex),
-                  _timeLine(_height)
-                ])));
-  });
+    return Container(
+        width: _height,
+        height: _height,
+        constraints: BoxConstraints(minWidth: 300, minHeight: 300),
+        child: Card(
+            color: _color,
+            child: Stack(children: [
+              _numberOfDate(_fixIndex, _time),
+              _taskList(_height, _fixIndex),
+              _timeLine(_height)
+            ])));
+  }));
 }
 
 Widget _numberOfDate(_index, DateTime _time) => Opacity(
     opacity: 0.6,
     child: Align(
-        alignment: Alignment.topCenter,
+        alignment: Alignment.center,
         child: Text("${(_time.day + (_index - _time.weekday))}",
-            style: TextStyle(height: 1, fontSize: 250))));
+            style: TextStyle(height: 1, fontSize: 300))));
 
-Widget _timeLine(_height) =>  Column(
-        children: List.generate(
-            5,
-            (index) => Container(
-                constraints: BoxConstraints(
-                  minHeight: (_height - 51) / 5,
-                  maxHeight: (_height - 51) / 5,
-                ),
-                child: Divider(thickness: 0.3, color: Colors.black54))));
+Widget _timeLine(_height) => Column(
+    children: List.generate(
+        5,
+        (index) => Container(
+            constraints: BoxConstraints(
+              minHeight: (_height - 51) / 5,
+              maxHeight: (_height - 51) / 5,
+            ),
+            child: Divider(thickness: 0.3, color: Colors.black54))));
 
 Widget _timeSerialized(_height) => Container(
     width: 45,
@@ -144,8 +138,8 @@ Widget _taskList(_height, _fixIndex) {
         List.generate(
             5,
             (index) => Opacity(
-                opacity: 0.8,
-                child:  Container(
+                  opacity: 0.8,
+                  child: Container(
                       height: (_height - 51) / 5,
                       width: _height,
                       color: Colors.transparent,
